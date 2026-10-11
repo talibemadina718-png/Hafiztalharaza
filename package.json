@@ -1,0 +1,26 @@
+{
+  "name": "hafiz-talha-raza-portfolio",
+  "version": "1.0.0",
+  "description": "Official Portfolio & Online Quran Academy of Hafiz Talha Raza with Private Secure Admin Editor",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "quran-academy",
+    "admin-editor",
+    "express",
+    "bcryptjs"
+  ],
+  "author": "Hafiz Talha Raza Attari",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
