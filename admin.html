@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | Hafiz Talha Raza Attari</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+  
+  <!-- Google Fonts: Poppins, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-base: #060606;
+      --bg-surface: #0e0e0e;
+      --bg-card: #141414;
+      --gold: #D4AF37;
+      --gold-soft: #F5D77E;
+      --gold-deep: #B8942E;
+      --text-main: #EDEDED;
+      --text-muted: #9E9E9E;
+      --border-color: rgba(212, 175, 55, 0.22);
+      --radius: 12px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient background grid */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* -------------------------------------------------------------
+       1. AUTHENTICATION LOGIN SCREEN
+       ------------------------------------------------------------- */
+    #authScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .login-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.15);
+      position: relative;
+    }
+
+    .login-brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .login-crest {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1c1c1c, #0a0a0a);
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px auto;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .login-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .login-subtitle {
+      font-size: 0.82rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #080808;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      background: linear-gradient(120deg, var(--gold), var(--gold-deep));
+      color: #000000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
+    }
+
+    .auth-error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .auth-note {
+      text-align: center;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------------------
+       2. AUTHENTICATED ADMIN DASHBOARD
+       ------------------------------------------------------------- */
+    #dashboardScreen {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+      z-index: 10;
+    }
+
+    .dash-header {
+      background: #0b0b0b;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .dash-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .dash-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-action {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-site {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .btn-site:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-logout {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .btn-logout:hover {
+      background: #ef4444;
+      color: #FFFFFF;
+    }
+
+    .dash-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      flex: 1;
+    }
+
+    .dash-sidebar {
+      background: #090909;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px 16px;
+    }
+
+    .nav-tabs-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-tab-item {
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab-item:hover, .nav-tab-item.active {
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+      border-left: 3px solid var(--gold);
+    }
+
+    .dash-main {
+      padding: 32px;
+      overflow-y: auto;
+      max-width: 900px;
+    }
+
+    .tab-section {
+      display: none;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    .card-box {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .card-box-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-box-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn-gold {
+      background: linear-gradient(120deg, var(--gold), var(--gold-deep));
+      color: #000000;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #181818;
+      border: 1px solid var(--gold);
+      color: #FFFFFF;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 768px) {
+      .dash-layout {
+        grid-template-columns: 1fr;
+      }
+      .dash-sidebar {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .dash-main {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+
+  <!-- ================= 1. AUTHENTICATION LOGIN SCREEN ================= -->
+  <section id="authScreen">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="login-crest">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h1 class="login-title">Administrator Access</h1>
+        <p class="login-subtitle">Hafiz Talha Raza Attari</p>
+      </div>
+
+      <div class="auth-error" id="authErrorMsg">
+        <i class="fa-solid fa-circle-exclamation mr-1"></i> Invalid username or password. Please verify your credentials.
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="adminUsername"><i class="fa-solid fa-user text-brand-gold mr-1"></i> Admin Username</label>
+          <input type="text" id="adminUsername" required class="form-input" placeholder="Enter username" autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="adminPassword"><i class="fa-solid fa-key text-brand-gold mr-1"></i> Password</label>
+          <input type="password" id="adminPassword" required class="form-input" placeholder="••••••••••••" autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn-login" id="loginSubmitBtn">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Authenticate & Enter Portal
+        </button>
+      </form>
+
+      <div class="auth-note">
+        <strong>Default Credentials:</strong><br>
+        Username: <code style="color: var(--gold);">admin</code> &nbsp;|&nbsp; Password: <code style="color: var(--gold);">admin@talha2026</code><br>
+        <span style="font-size: 0.72rem; color: #777;">(Credentials can be updated anytime inside the portal)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. AUTHENTICATED ADMIN DASHBOARD ================= -->
+  <section id="dashboardScreen">
+    
+    <!-- Top Bar -->
+    <header class="dash-header">
+      <div class="dash-brand">
+        <span style="font-weight: 800; font-size: 1.1rem; color: #FFF;">Hafiz Talha Raza</span>
+        <span class="dash-badge"><span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span> Authenticated Admin</span>
+      </div>
+
+      <div class="dash-actions">
+        <a href="index.html" target="_blank" class="btn-action btn-site">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Website
+        </a>
+        <button type="button" class="btn-action btn-logout" id="logoutBtn" onclick="logoutAdmin()">
+          <i class="fa-solid fa-power-off"></i> Sign Out
+        </button>
+      </div>
+    </header>
+
+    <!-- Dashboard Content Layout -->
+    <div class="dash-layout">
+      
+      <!-- Sidebar Navigation -->
+      <aside class="dash-sidebar">
+        <ul class="nav-tabs-list">
+          <li class="nav-tab-item active" onclick="switchTab('tab-content')"><i class="fa-solid fa-file-pen"></i> Website Content</li>
+          <li class="nav-tab-item" onclick="switchTab('tab-media')"><i class="fa-solid fa-image"></i> Media & Portraits</li>
+          <li class="nav-tab-item" onclick="switchTab('tab-theme')"><i class="fa-solid fa-palette"></i> Theme & Design</li>
+          <li class="nav-tab-item" onclick="switchTab('tab-backup')"><i class="fa-solid fa-database"></i> Backup & Publishing</li>
+          <li class="nav-tab-item" onclick="switchTab('tab-security')"><i class="fa-solid fa-shield-halved"></i> Security & Backend</li>
+        </ul>
+      </aside>
+
+      <!-- Main Panel Views -->
+      <main class="dash-main">
+        
+        <!-- Tab 1: Content Editor -->
+        <div id="tab-content" class="tab-section active">
+          <div class="card-box">
+            <h2 class="card-box-title"><i class="fa-solid fa-id-card text-brand-gold"></i> Hero Section Settings</h2>
+            <p class="card-box-desc">Update the primary identity headlines and bio displayed to all public visitors.</p>
+
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" id="cfg_hero_name" value="Hafiz Talha Raza Attari">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Professional Role Headline</label>
+              <input type="text" class="form-input" id="cfg_hero_role" value="Quran Teacher • Graphic Designer • AI Graduate">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Bio Introduction Paragraph</label>
+              <textarea class="form-input" rows="3" id="cfg_hero_bio">Welcome to my official portfolio and teaching platform. I provide structured, 1-on-1 virtual Quran education focusing on authentic Makharij and Tajweed rules, coupled with modern visual aids and Islamic character building.</textarea>
+            </div>
+          </div>
+
+          <div class="card-box">
+            <h2 class="card-box-title"><i class="fa-solid fa-address-book text-brand-gold"></i> Direct Contact Credentials</h2>
+            <p class="card-box-desc">These credentials update the WhatsApp chat link, email address, and official channels.</p>
+
+            <div class="form-group">
+              <label class="form-label">WhatsApp Contact Number</label>
+              <input type="text" class="form-input" id="cfg_contact_wa" value="03126571673">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Official Email Address</label>
+              <input type="email" class="form-input" id="cfg_contact_email" value="hafiztalharazaattari@gmail.com">
+            </div>
+
+            <button type="button" class="btn-gold" onclick="saveAdminChanges()">
+              <i class="fa-solid fa-floppy-disk"></i> Save & Publish Content Changes
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 2: Media & Portraits -->
+        <div id="tab-media" class="tab-section">
+          <div class="card-box">
+            <h2 class="card-box-title"><i class="fa-solid fa-camera text-brand-gold"></i> Profile Portrait Choice</h2>
+            <p class="card-box-desc">Choose which photograph is featured inside the animated golden ring on the public website.</p>
+
+            <div class="form-group">
+              <label class="form-label">Select Active Photo</label>
+              <select class="form-input" id="cfg_photo_select" onchange="toggleCustomUrl(this.value)">
+                <option value="assets/images/talha-hero.jpg">Green Turban (Hero Photo - Active)</option>
+                <option value="assets/images/talha-profile.jpg">Black Kurta & Turban (Original Photo)</option>
+                <option value="custom">Custom Image URL...</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="customUrlGroup" style="display: none;">
+              <label class="form-label">Custom Image URL</label>
+              <input type="url" class="form-input" id="cfg_custom_photo_url" placeholder="https://example.com/portrait.jpg">
+            </div>
+
+            <button type="button" class="btn-gold" onclick="saveAdminChanges()">
+              <i class="fa-solid fa-floppy-disk"></i> Apply Portrait Update
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 3: Theme Controls -->
+        <div id="tab-theme" class="tab-section">
+          <div class="card-box">
+            <h2 class="card-box-title"><i class="fa-solid fa-swatchbook text-brand-gold"></i> Design & Palette Customizer</h2>
+            <p class="card-box-desc">Customize the metallic gold accent tone and card border styles.</p>
+
+            <div class="form-group">
+              <label class="form-label">Gold Accent Color</label>
+              <input type="color" class="form-input" style="height: 48px; padding: 4px; cursor: pointer;" id="cfg_gold_color" value="#D4AF37">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Corner Radius</label>
+              <select class="form-input" id="cfg_radius_select">
+                <option value="14px">Modern (14px - Default)</option>
+                <option value="8px">Crisp Minimalist (8px)</option>
+                <option value="20px">Curved Luxury (20px)</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn-gold" onclick="saveAdminChanges()">
+              <i class="fa-solid fa-floppy-disk"></i> Update Visual Theme
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 4: Backup & Publishing -->
+        <div id="tab-backup" class="tab-section">
+          <div class="card-box">
+            <h2 class="card-box-title"><i class="fa-solid fa-cloud-arrow-down text-brand-gold"></i> Export / Import JSON Configurations</h2>
+            <p class="card-box-desc">Safely back up your website text and settings or import a previously exported archive.</p>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button type="button" class="btn-gold" onclick="exportConfigJson()">
+                <i class="fa-solid fa-download"></i> Export Configuration (JSON)
+              </button>
+              <button type="button" class="btn-action btn-site" onclick="document.getElementById('importFile').click()">
+                <i class="fa-solid fa-upload"></i> Import Configuration (JSON)
+              </button>
+              <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importConfigJson(event)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Security & Backend Configuration -->
+        <div id="tab-security" class="tab-section">
+          <div class="card-box">
+            <h2 class="card-box-title"><i class="fa-solid fa-lock text-brand-gold"></i> Admin Credentials Manager</h2>
+            <p class="card-box-desc">Update your administrator username and password stored in this browser session.</p>
+
+            <div class="form-group">
+              <label class="form-label">New Username</label>
+              <input type="text" class="form-input" id="sec_new_username" placeholder="admin">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">New Password</label>
+              <input type="password" class="form-input" id="sec_new_password" placeholder="••••••••••••">
+            </div>
+
+            <button type="button" class="btn-gold" onclick="updateCredentials()">
+              <i class="fa-solid fa-key"></i> Update Credentials
+            </button>
+          </div>
+
+          <div class="card-box">
+            <h2 class="card-box-title"><i class="fa-solid fa-server text-brand-gold"></i> Backend Authentication Architecture</h2>
+            <p class="card-box-desc">To deploy genuine server-side authentication in production, refer to the included <code style="color: var(--gold);">server-config.md</code> documentation with Node.js, PHP, or Python session handlers.</p>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </section>
+
+  <!-- Notification Toast -->
+  <div class="toast-msg" id="toastMsg">
+    <i class="fa-solid fa-circle-check text-brand-gold mr-1"></i>
+    <span id="toastText">Action completed successfully.</span>
+  </div>
+
+  <script>
+    // --- AUTHENTICATION ENGINE ---
+    const AUTH_KEY = 'talha_admin_auth_token_v2';
+    const CRED_KEY = 'talha_admin_credentials_v2';
+    const CONFIG_KEY = 'talha_academy_master_config_v2';
+
+    // Default Credentials
+    function getStoredCredentials() {
+      const saved = localStorage.getItem(CRED_KEY);
+      if (saved) {
+        try { return JSON.parse(saved); } catch(e) {}
+      }
+      return { username: 'admin', password: 'admin@talha2026' };
+    }
+
+    function checkAuthSession() {
+      const token = sessionStorage.getItem(AUTH_KEY);
+      if (token && token.startsWith('AUTH_OK_')) {
+        document.getElementById('authScreen').style.display = 'none';
+        document.getElementById('dashboardScreen').style.display = 'flex';
+        loadDashboardData();
+      } else {
+        document.getElementById('authScreen').style.display = 'flex';
+        document.getElementById('dashboardScreen').style.display = 'none';
+      }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('adminUsername').value.trim();
+      const p = document.getElementById('adminPassword').value.trim();
+      const creds = getStoredCredentials();
+
+      if (u === creds.username && p === creds.password) {
+        // Authenticated! Store session token
+        sessionStorage.setItem(AUTH_KEY, 'AUTH_OK_' + Date.now());
+        document.getElementById('authErrorMsg').style.display = 'none';
+        checkAuthSession();
+        showToast('Authentication successful! Welcome to the Admin Portal.');
+      } else {
+        document.getElementById('authErrorMsg').style.display = 'block';
+      }
+    });
+
+    function logoutAdmin() {
+      sessionStorage.removeItem(AUTH_KEY);
+      checkAuthSession();
+      showToast('Logged out securely.');
+    }
+
+    function updateCredentials() {
+      const u = document.getElementById('sec_new_username').value.trim();
+      const p = document.getElementById('sec_new_password').value.trim();
+
+      if (u.length < 3 || p.length < 6) {
+        alert('Username must be at least 3 characters and password at least 6 characters.');
+        return;
+      }
+
+      localStorage.setItem(CRED_KEY, JSON.stringify({ username: u, password: p }));
+      showToast('Admin credentials updated! Please log in again.');
+      logoutAdmin();
+    }
+
+    // --- DASHBOARD NAVIGATION & DATA ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.nav-tab-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+
+      event.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function toggleCustomUrl(val) {
+      document.getElementById('customUrlGroup').style.display = (val === 'custom') ? 'block' : 'none';
+    }
+
+    function loadDashboardData() {
+      const saved = localStorage.getItem(CONFIG_KEY);
+      if (saved) {
+        try {
+          const cfg = JSON.parse(saved);
+          if (cfg.hero_name) document.getElementById('cfg_hero_name').value = cfg.hero_name;
+          if (cfg.hero_role) document.getElementById('cfg_hero_role').value = cfg.hero_role;
+          if (cfg.hero_bio) document.getElementById('cfg_hero_bio').value = cfg.hero_bio;
+          if (cfg.profile_img) {
+            const select = document.getElementById('cfg_photo_select');
+            if (cfg.profile_img.startsWith('assets/')) {
+              select.value = cfg.profile_img;
+            } else {
+              select.value = 'custom';
+              document.getElementById('cfg_custom_photo_url').value = cfg.profile_img;
+              toggleCustomUrl('custom');
+            }
+          }
+          if (cfg.gold_color) document.getElementById('cfg_gold_color').value = cfg.gold_color;
+          if (cfg.radius) document.getElementById('cfg_radius_select').value = cfg.radius;
+        } catch(e) {}
+      }
+    }
+
+    function saveAdminChanges() {
+      let photo = document.getElementById('cfg_photo_select').value;
+      if (photo === 'custom') {
+        photo = document.getElementById('cfg_custom_photo_url').value.trim() || 'assets/images/talha-hero.jpg';
+      }
+
+      const cfg = {
+        hero_name: document.getElementById('cfg_hero_name').value.trim(),
+        hero_role: document.getElementById('cfg_hero_role').value.trim(),
+        hero_bio: document.getElementById('cfg_hero_bio').value.trim(),
+        contact_wa: document.getElementById('cfg_contact_wa').value.trim(),
+        contact_email: document.getElementById('cfg_contact_email').value.trim(),
+        profile_img: photo,
+        gold_color: document.getElementById('cfg_gold_color').value,
+        radius: document.getElementById('cfg_radius_select').value
+      };
+
+      localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
+      showToast('All changes published to live website!');
+    }
+
+    function exportConfigJson() {
+      const cfg = localStorage.getItem(CONFIG_KEY) || JSON.stringify({ hero_name: 'Hafiz Talha Raza Attari' });
+      const blob = new Blob([cfg], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'talha-academy-published-config.json';
+      a.click();
+      showToast('Configuration exported as JSON.');
+    }
+
+    function importConfigJson(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const data = JSON.parse(event.target.result);
+          localStorage.setItem(CONFIG_KEY, JSON.stringify(data));
+          loadDashboardData();
+          showToast('Configuration imported and published!');
+        } catch(err) {
+          alert('Invalid JSON file format.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      document.getElementById('toastText').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // On page load check session
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuthSession();
+    });
+  </script>
+</body>
+</html>
