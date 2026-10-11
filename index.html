@@ -302,92 +302,42 @@
     }
 
     /* ==========================================================================
-       2. TOP BAR & SITE NAVIGATION
+       2. SITE NAVIGATION & BRAND IDENTITY
        ========================================================================== */
-    .top-notice-bar {
-      background: #090909;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-      padding: 8px 0;
-      font-size: 0.8rem;
-    }
-    .top-notice-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .live-pulse-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-    }
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulseGreen 1.8s infinite;
-    }
-    @keyframes pulseGreen {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.2); }
-    }
-    .top-lang-selector {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .lang-pill {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
-      padding: 3px 9px;
-      font-size: 0.72rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      font-family: inherit;
-    }
-    .lang-pill:hover, .lang-pill.active {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(212, 175, 55, 0.08);
-    }
-
-    /* Main Navigation Bar */
     .site-nav {
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(6, 6, 6, 0.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 1000;
+      background: rgba(6, 6, 6, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       transition: all var(--transition-normal);
+      width: 100%;
     }
     .site-nav.scrolled {
       background: rgba(6, 6, 6, 0.98);
       border-bottom-color: var(--gold-border);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
     }
     .nav-inner {
-      height: 78px;
+      height: 74px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 16px;
+      width: 100%;
     }
 
-    /* Brand Logo */
+    /* Brand Identity */
     .nav-brand {
       display: flex;
       align-items: center;
       gap: 12px;
       text-decoration: none;
       color: #FFFFFF;
+      min-width: 0;
+      flex-shrink: 1;
     }
     .nav-logo-crest {
       width: 44px;
@@ -403,22 +353,56 @@
       font-size: 1.1rem;
       box-shadow: 0 0 16px rgba(212, 175, 55, 0.2);
       flex-shrink: 0;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     }
-    .nav-brand-text h2 {
-      font-size: 1.15rem;
+    .nav-brand:hover .nav-logo-crest {
+      transform: scale(1.04);
+      box-shadow: 0 0 22px rgba(212, 175, 55, 0.35);
+    }
+    .nav-brand-text {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .nav-brand-name {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.12;
+    }
+    .brand-name-primary {
+      font-size: 1.05rem;
       font-weight: 800;
-      line-height: 1.1;
+      color: #FFFFFF;
       letter-spacing: -0.3px;
+      white-space: nowrap;
+      transition: color var(--transition-fast);
     }
-    .nav-brand-text p {
-      font-size: 0.72rem;
+    .nav-brand:hover .brand-name-primary {
+      color: var(--gold-soft);
+    }
+    .brand-name-suffix {
+      font-size: 0.82rem;
+      font-weight: 700;
       color: var(--gold);
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-top: 1px;
+      white-space: nowrap;
+    }
+    .nav-brand-sub {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 1.4px;
       text-transform: uppercase;
       font-weight: 600;
+      line-height: 1;
+      margin-top: 3px;
+      white-space: nowrap;
     }
 
-    /* Desktop Links */
+    /* Desktop Navigation Links */
     .nav-menu {
       display: flex;
       align-items: center;
@@ -448,24 +432,184 @@
       border-radius: 2px;
     }
 
+    /* Navigation Action Items */
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-    .nav-cta-btn {
-      padding: 10px 22px;
-      font-size: 0.86rem;
+      gap: 10px;
+      flex-shrink: 0;
     }
 
+    /* Elegant Compact Language Selector Dropdown */
+    .lang-dropdown-wrapper {
+      position: relative;
+    }
+    .lang-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      color: #FFFFFF;
+      padding: 8px 13px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .lang-trigger-btn:hover,
+    .lang-dropdown-wrapper.open .lang-trigger-btn {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--gold-soft);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.2);
+    }
+    .lang-icon {
+      color: var(--gold);
+      font-size: 0.88rem;
+    }
+    .lang-chevron {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      transition: transform var(--transition-fast);
+    }
+    .lang-dropdown-wrapper.open .lang-chevron {
+      transform: rotate(180deg);
+      color: var(--gold);
+    }
+
+    /* Dropdown Menu */
+    .lang-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 175px;
+      background: #0f0f0f;
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-md);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(212, 175, 55, 0.12);
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      z-index: 1200;
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [dir="rtl"] .lang-dropdown-menu {
+      right: auto;
+      left: 0;
+    }
+    .lang-dropdown-wrapper.open .lang-dropdown-menu {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 12px;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+      width: 100%;
+      text-align: left;
+    }
+    [dir="rtl"] .lang-option {
+      text-align: right;
+    }
+    .lang-option:hover {
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--gold-soft);
+    }
+    .lang-option.active {
+      background: rgba(212, 175, 55, 0.16);
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .lang-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .lang-option.active .lang-badge {
+      background: rgba(212, 175, 55, 0.25);
+      color: var(--gold);
+    }
+    .lang-active-check {
+      font-size: 0.72rem;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+    .lang-option.active .lang-active-check {
+      opacity: 1;
+    }
+
+    /* CTA Button (Zain Ali Digital Style) */
+    .nav-cta-btn {
+      padding: 9px 18px;
+      font-size: 0.84rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-cta-text-short {
+      display: none;
+    }
+
+    /* Mobile Hamburger Trigger */
     .mobile-burger-btn {
       display: none;
       background: transparent;
       border: none;
       color: #FFFFFF;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       cursor: pointer;
       padding: 6px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition-fast);
+      line-height: 1;
+    }
+    .mobile-burger-btn:hover {
+      color: var(--gold);
+    }
+
+    /* Mobile Drawer Quick Language Selector */
+    .drawer-lang-btn {
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: inherit;
+      text-align: center;
+    }
+    .drawer-lang-btn:hover, .drawer-lang-btn.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.12);
     }
 
     /* Mobile Drawer */
@@ -1474,28 +1618,31 @@
         filter: blur(60px);
         opacity: 0.22;
       }
-      .top-notice-inner {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        gap: 8px;
-        padding: 2px 0;
+      .nav-inner {
+        height: 68px;
+        gap: 12px;
       }
-      .live-pulse-badge {
-        font-size: 0.74rem;
-        justify-content: center;
-        text-align: center;
-        line-height: 1.4;
+      .nav-logo-crest {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
       }
-      .top-lang-selector {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 5px;
+      .brand-name-primary {
+        font-size: 0.98rem;
       }
-      .lang-pill {
-        padding: 3px 8px;
-        font-size: 0.72rem;
+      .brand-name-suffix {
+        font-size: 0.78rem;
+      }
+      .nav-brand-sub {
+        font-size: 0.62rem;
+      }
+      .lang-trigger-btn {
+        padding: 7px 11px;
+        font-size: 0.78rem;
+      }
+      .nav-cta-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
       }
       .section-head {
         margin-bottom: 40px;
@@ -1551,30 +1698,55 @@
         background: rgba(6, 6, 6, 0.96);
       }
       .nav-inner {
-        height: 64px;
+        height: 60px;
+        gap: 8px;
+      }
+      .nav-brand {
         gap: 8px;
       }
       .nav-logo-crest {
-        width: 36px;
-        height: 36px;
-        font-size: 0.95rem;
-        border-radius: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+        border-radius: 9px;
       }
-      .nav-brand-text h2 {
-        font-size: 0.94rem;
-        line-height: 1.15;
+      .brand-name-primary {
+        font-size: 0.88rem;
+        letter-spacing: -0.2px;
       }
-      .nav-brand-text p {
-        font-size: 0.62rem;
-        letter-spacing: 0.8px;
+      .brand-name-suffix {
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+      }
+      .nav-brand-sub {
+        font-size: 0.58rem;
+        letter-spacing: 0.6px;
+        margin-top: 1.5px;
       }
       .nav-actions {
-        gap: 8px;
+        gap: 6px;
+      }
+      .lang-trigger-btn {
+        padding: 6px 9px;
+        font-size: 0.74rem;
+        gap: 4px;
+      }
+      .lang-trigger-text {
+        display: none;
+      }
+      .lang-trigger-code {
+        display: inline !important;
+        font-weight: 700;
+        font-size: 0.72rem;
       }
       .nav-cta-btn {
-        padding: 8px 14px;
-        font-size: 0.76rem;
-        gap: 5px;
+        padding: 7px 12px;
+        font-size: 0.74rem;
+        gap: 4px;
+      }
+      .mobile-burger-btn {
+        font-size: 1.25rem;
+        padding: 4px;
       }
 
       /* Hero Mobile View */
@@ -1859,17 +2031,48 @@
         padding: 0 10px;
       }
       .nav-inner {
+        height: 56px;
+        gap: 5px;
+      }
+      .nav-brand {
         gap: 6px;
       }
-      .nav-brand-text h2 {
-        font-size: 0.88rem;
+      .nav-logo-crest {
+        width: 32px;
+        height: 32px;
+        font-size: 0.84rem;
+        border-radius: 8px;
       }
-      .nav-brand-text p {
-        display: none;
+      .brand-name-primary {
+        font-size: 0.80rem;
+      }
+      .brand-name-suffix {
+        font-size: 0.66rem;
+      }
+      .nav-brand-sub {
+        font-size: 0.52rem;
+        letter-spacing: 0.3px;
+      }
+      .nav-actions {
+        gap: 4px;
+      }
+      .lang-trigger-btn {
+        padding: 5px 7px;
+        font-size: 0.7rem;
       }
       .nav-cta-btn {
-        padding: 7px 10px;
-        font-size: 0.72rem;
+        padding: 6px 9px;
+        font-size: 0.7rem;
+      }
+      .nav-cta-text-full {
+        display: none;
+      }
+      .nav-cta-text-short {
+        display: inline;
+      }
+      .mobile-burger-btn {
+        font-size: 1.15rem;
+        padding: 2px;
       }
       .hero-name {
         font-size: 1.62rem;
@@ -1912,37 +2115,21 @@
   <div class="zad-orb zad-orb-1"></div>
   <div class="zad-orb zad-orb-2"></div>
 
-  <!-- ================= TOP NOTICE BAR ================= -->
-  <div class="top-notice-bar">
-    <div class="container top-notice-inner">
-      <div class="live-pulse-badge">
-        <span class="live-dot"></span>
-        <span data-i18n="notice_trial">Limited Slots Available • Free 3-Day Demo Classes for Madani Qaida & Nazra Quran</span>
-      </div>
-      
-      <!-- Four-Language Interface Switcher -->
-      <div class="top-lang-selector">
-        <span class="text-xs text-neutral-500 mr-1"><i class="fa-solid fa-language"></i></span>
-        <button type="button" class="lang-pill active" onclick="setLanguage('en')">English</button>
-        <button type="button" class="lang-pill" onclick="setLanguage('ur')">اردو</button>
-        <button type="button" class="lang-pill" onclick="setLanguage('ro-ur')">Roman Urdu</button>
-        <button type="button" class="lang-pill" onclick="setLanguage('ar')">العربية</button>
-      </div>
-    </div>
-  </div>
-
   <!-- ================= MAIN HEADER & NAVIGATION ================= -->
   <header class="site-nav" id="mainNavbar">
     <div class="container nav-inner">
       
-      <!-- Brand Logo -->
-      <a href="#hero" class="nav-brand">
+      <!-- Brand Logo & Executive Typography -->
+      <a href="#hero" class="nav-brand" aria-label="Hafiz Talha Raza Attari">
         <div class="nav-logo-crest" id="navLogoCrest">
           <span>TR</span>
         </div>
         <div class="nav-brand-text">
-          <h2 data-i18n="brand_name">Hafiz Talha Raza</h2>
-          <p data-i18n="brand_tag">Online Quran Academy</p>
+          <div class="nav-brand-name">
+            <span class="brand-name-primary" data-i18n="brand_name_primary">Hafiz Talha Raza</span>
+            <span class="brand-name-suffix" data-i18n="brand_name_suffix">Attari</span>
+          </div>
+          <p class="nav-brand-sub" data-i18n="brand_tag">Online Quran Academy</p>
         </div>
       </a>
 
@@ -1960,11 +2147,44 @@
         </ul>
       </nav>
 
-      <!-- Nav Action CTAs -->
+      <!-- Nav Action Cluster -->
       <div class="nav-actions">
+        <!-- Compact Language Selector Dropdown -->
+        <div class="lang-dropdown-wrapper" id="langDropdownWrapper">
+          <button type="button" class="lang-trigger-btn" id="langTriggerBtn" aria-expanded="false" aria-haspopup="true" aria-label="Select Language">
+            <i class="fa-solid fa-globe lang-icon"></i>
+            <span class="lang-trigger-text" id="langTriggerText">Language</span>
+            <span class="lang-trigger-code" id="langTriggerCode" style="display: none;">EN</span>
+            <i class="fa-solid fa-chevron-down lang-chevron"></i>
+          </button>
+          <div class="lang-dropdown-menu" id="langDropdownMenu" role="menu">
+            <button type="button" class="lang-option active" data-lang="en" onclick="selectLanguage('en')" role="menuitem">
+              <span class="lang-badge">EN</span>
+              <span class="lang-name">English</span>
+              <i class="fa-solid fa-check lang-active-check"></i>
+            </button>
+            <button type="button" class="lang-option" data-lang="ur" onclick="selectLanguage('ur')" role="menuitem">
+              <span class="lang-badge">اردو</span>
+              <span class="lang-name">اردو</span>
+              <i class="fa-solid fa-check lang-active-check"></i>
+            </button>
+            <button type="button" class="lang-option" data-lang="ro-ur" onclick="selectLanguage('ro-ur')" role="menuitem">
+              <span class="lang-badge">RO</span>
+              <span class="lang-name">Roman Urdu</span>
+              <i class="fa-solid fa-check lang-active-check"></i>
+            </button>
+            <button type="button" class="lang-option" data-lang="ar" onclick="selectLanguage('ar')" role="menuitem">
+              <span class="lang-badge">عرب</span>
+              <span class="lang-name">العربية</span>
+              <i class="fa-solid fa-check lang-active-check"></i>
+            </button>
+          </div>
+        </div>
+
         <!-- CTA Button -->
-        <a href="#admission" class="btn btn-gold nav-cta-btn" data-i18n="cta_book_demo">
-          Book Free Demo
+        <a href="#admission" class="btn btn-gold nav-cta-btn">
+          <span class="nav-cta-text-full" data-i18n="cta_demo_full">Book Free Demo</span>
+          <span class="nav-cta-text-short" data-i18n="cta_demo_short">Demo</span>
         </a>
 
         <!-- Mobile Burger -->
@@ -1980,10 +2200,30 @@
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <div class="mobile-drawer" id="mobileDrawer">
     <div class="flex items-center justify-between pb-4 border-b border-white/10">
-      <span class="font-bold text-white text-base">Hafiz Talha Raza</span>
-      <button type="button" id="closeDrawerBtn" class="text-neutral-400 hover:text-white text-xl">&times;</button>
+      <div class="flex items-center gap-2">
+        <div class="nav-logo-crest" style="width: 32px; height: 32px; font-size: 0.85rem;">
+          <span>TR</span>
+        </div>
+        <div class="flex flex-col leading-tight">
+          <span class="font-bold text-white text-sm" data-i18n="brand_name_primary">Hafiz Talha Raza</span>
+          <span class="text-xs text-brand-gold font-semibold uppercase tracking-wider" data-i18n="brand_name_suffix">Attari</span>
+        </div>
+      </div>
+      <button type="button" id="closeDrawerBtn" class="text-neutral-400 hover:text-white text-xl" aria-label="Close Menu">&times;</button>
     </div>
-    <ul class="flex flex-col gap-3 list-none">
+
+    <!-- Quick Language Selector inside Drawer -->
+    <div class="py-3 border-b border-white/10">
+      <span class="text-xs text-neutral-400 mb-2 block font-medium">Select Language:</span>
+      <div class="grid grid-cols-2 gap-2">
+        <button type="button" class="drawer-lang-btn active" data-drawer-lang="en" onclick="selectLanguage('en')">English</button>
+        <button type="button" class="drawer-lang-btn" data-drawer-lang="ur" onclick="selectLanguage('ur')">اردو</button>
+        <button type="button" class="drawer-lang-btn" data-drawer-lang="ro-ur" onclick="selectLanguage('ro-ur')">Roman Urdu</button>
+        <button type="button" class="drawer-lang-btn" data-drawer-lang="ar" onclick="selectLanguage('ar')">العربية</button>
+      </div>
+    </div>
+
+    <ul class="flex flex-col gap-3 list-none pt-2">
       <li><a href="#hero" class="nav-link" data-i18n="nav_home">Home</a></li>
       <li><a href="#about" class="nav-link" data-i18n="nav_about">About Me</a></li>
       <li><a href="#qualifications" class="nav-link" data-i18n="nav_qualifications">Qualifications</a></li>
@@ -1993,8 +2233,8 @@
       <li><a href="#admission" class="nav-link" data-i18n="nav_admission">Admission</a></li>
       <li><a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a></li>
     </ul>
-    <div class="pt-4 border-t border-white/10 flex flex-col gap-2">
-      <a href="#admission" class="btn btn-gold w-full text-center" data-i18n="cta_book_demo">Book Free Demo</a>
+    <div class="pt-4 border-t border-white/10 flex flex-col gap-2 mt-auto">
+      <a href="#admission" class="btn btn-gold w-full text-center" data-i18n="cta_demo_full">Book Free Demo</a>
       <a href="https://wa.me/923126571673" target="_blank" rel="noopener noreferrer" class="btn btn-wa w-full text-center">
         <i class="fa-brands fa-whatsapp"></i> WhatsApp
       </a>
@@ -2886,6 +3126,8 @@
       en: {
         notice_trial: "Limited Slots Available • Free 3-Day Demo Classes for Madani Qaida & Nazra Quran",
         brand_name: "Hafiz Talha Raza",
+        brand_name_primary: "Hafiz Talha Raza",
+        brand_name_suffix: "Attari",
         brand_tag: "Online Quran Academy",
         nav_home: "Home",
         nav_about: "About Me",
@@ -2896,6 +3138,9 @@
         nav_admission: "Admission",
         nav_contact: "Contact",
         cta_book_demo: "Book Free Demo",
+        cta_demo_full: "Book Free Demo",
+        cta_demo_short: "Demo",
+        lang_btn_text: "Language",
         hero_pill: "Islamic Scholar & Digital Educator",
         hero_name: "Hafiz Talha Raza Attari",
         hero_role: "Quran Teacher • Graphic Designer • AI Graduate",
@@ -3004,6 +3249,8 @@
       ur: {
         notice_trial: "محدود نشستیں دستیاب ہیں • مدنی قاعدہ اور ناظرہ قرآن کی 3 روزہ فری ڈیمو کلاس",
         brand_name: "حافظ طلحہ رضا عطاری",
+        brand_name_primary: "حافظ طلحہ رضا",
+        brand_name_suffix: "عطاری",
         brand_tag: "آن لائن قرآنی اکیڈمی",
         nav_home: "صفحۂ اول",
         nav_about: "تعارف",
@@ -3014,6 +3261,9 @@
         nav_admission: "داخلہ فارم",
         nav_contact: "رابطہ",
         cta_book_demo: "فری ڈیمو کلاس",
+        cta_demo_full: "فری ڈیمو کلاس",
+        cta_demo_short: "ڈیمو",
+        lang_btn_text: "زبان",
         hero_pill: "اسلامی اسکالر و ڈیجیٹل معلم",
         hero_name: "حافظ طلحہ رضا عطاری",
         hero_role: "معلمِ قرآن • گرافک ڈیزائنر • اے آئی گریجویٹ",
@@ -3122,6 +3372,8 @@
       "ro-ur": {
         notice_trial: "Limited Slots Available • Madani Qaida aur Nazra Quran ki 3-Day Free Demo Classes",
         brand_name: "Hafiz Talha Raza",
+        brand_name_primary: "Hafiz Talha Raza",
+        brand_name_suffix: "Attari",
         brand_tag: "Online Quran Academy",
         nav_home: "Home",
         nav_about: "About Me",
@@ -3132,6 +3384,9 @@
         nav_admission: "Admission",
         nav_contact: "Contact",
         cta_book_demo: "Free Demo Class",
+        cta_demo_full: "Book Free Demo",
+        cta_demo_short: "Demo",
+        lang_btn_text: "Language",
         hero_pill: "Islamic Scholar & Digital Educator",
         hero_name: "Hafiz Talha Raza Attari",
         hero_role: "Quran Teacher • Graphic Designer • AI Graduate",
@@ -3240,6 +3495,8 @@
       ar: {
         notice_trial: "المقاعد محدودة • دروس تجريبية مجانية لمدة 3 أيام في القاعدة المدنية ونظرة القرآن",
         brand_name: "الشيخ الحافظ طلحة رضا",
+        brand_name_primary: "حافظ طلحة رضا",
+        brand_name_suffix: "عطاري",
         brand_tag: "أكاديمية تعليم القرآن الكريم عبر الإنترنت",
         nav_home: "الرئيسية",
         nav_about: "نبذة عني",
@@ -3250,6 +3507,9 @@
         nav_admission: "التسجيل",
         nav_contact: "اتصل بنا",
         cta_book_demo: "حصة تجريبية مجانية",
+        cta_demo_full: "حجز حصة تجريبية",
+        cta_demo_short: "تجربة",
+        lang_btn_text: "اللغة",
         hero_pill: "باحث إسلامي ومعلم رقمي",
         hero_name: "الحافظ طلحة رضا العطاري",
         hero_role: "معلم القرآن الكريم • مصمم جرافيك • خريج الذكاء الاصطناعي",
@@ -3357,9 +3617,16 @@
       }
     };
 
+    const langMeta = {
+      en: { name: 'English', code: 'EN', toast: 'Language set to English' },
+      ur: { name: 'اردو', code: 'اردو', toast: 'زبان اردو منتخب ہو گئی' },
+      'ro-ur': { name: 'Roman Urdu', code: 'RO', toast: 'Language set to Roman Urdu' },
+      ar: { name: 'العربية', code: 'عرب', toast: 'تم تغيير اللغة إلى العربية' }
+    };
+
     let currentLang = 'en';
 
-    function setLanguage(lang) {
+    function setLanguage(lang, notify = true) {
       if (!translations[lang]) return;
       currentLang = lang;
       
@@ -3367,20 +3634,73 @@
       htmlEl.lang = lang;
       htmlEl.dir = (lang === 'ur' || lang === 'ar') ? 'rtl' : 'ltr';
 
-      document.querySelectorAll('.lang-pill').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('onclick').includes(lang));
+      // Update desktop dropdown option states & active checkmarks
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        const isActive = btn.getAttribute('data-lang') === lang;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
 
-      // Apply translations
+      // Update mobile drawer quick language buttons
+      document.querySelectorAll('.drawer-lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-drawer-lang') === lang);
+      });
+
+      // Update trigger button label and compact mobile code pill
+      const meta = langMeta[lang] || { name: 'Language', code: 'EN', toast: `Language set to ${lang.toUpperCase()}` };
+      const triggerText = document.getElementById('langTriggerText');
+      if (triggerText) {
+        triggerText.innerText = meta.name;
+      }
+      const triggerCode = document.getElementById('langTriggerCode');
+      if (triggerCode) {
+        triggerCode.innerText = meta.code;
+      }
+
+      // Apply translations to all matching DOM elements
       const dict = translations[lang];
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
+        if (dict && dict[key] !== undefined) {
           el.innerHTML = dict[key];
         }
       });
 
-      showToast(`Language set to ${lang.toUpperCase()}`);
+      // Persist language choice in localStorage
+      try {
+        localStorage.setItem('talha_site_lang', lang);
+      } catch(e) {}
+
+      if (notify) {
+        showToast(meta.toast);
+      }
+    }
+
+    function selectLanguage(lang) {
+      setLanguage(lang, true);
+      closeLangDropdown();
+      const drawer = document.getElementById('mobileDrawer');
+      if (drawer && drawer.classList.contains('open')) {
+        toggleDrawer(false);
+      }
+    }
+
+    function toggleLangDropdown(forceState) {
+      const wrapper = document.getElementById('langDropdownWrapper');
+      const trigger = document.getElementById('langTriggerBtn');
+      if (!wrapper) return;
+      const willOpen = typeof forceState === 'boolean'
+        ? forceState
+        : !wrapper.classList.contains('open');
+      
+      wrapper.classList.toggle('open', willOpen);
+      if (trigger) {
+        trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }
+    }
+
+    function closeLangDropdown() {
+      toggleLangDropdown(false);
     }
 
     // --- 2. LOCALSTORAGE PERSISTENT CONTENT ENGINE ---
@@ -3641,9 +3961,40 @@ Assalam-o-Alaikum Hafiz Talha Raza! Please confirm our 3-Day Free Demo Trial Cla
     // Update Copyright Year
     document.getElementById('footerYear').innerText = new Date().getFullYear();
 
+    // Setup language dropdown trigger, outside-click & keyboard handlers
+    const langTriggerBtn = document.getElementById('langTriggerBtn');
+    if (langTriggerBtn) {
+      langTriggerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleLangDropdown();
+      });
+    }
+
+    // Dismiss dropdown on outside clicks
+    document.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('langDropdownWrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        closeLangDropdown();
+      }
+    });
+
+    // Dismiss dropdown & drawer on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLangDropdown();
+        toggleDrawer(false);
+      }
+    });
+
     // Initialize application on load
     document.addEventListener('DOMContentLoaded', () => {
       applySavedConfig();
+      const savedLang = localStorage.getItem('talha_site_lang');
+      if (savedLang && translations[savedLang]) {
+        setLanguage(savedLang, false);
+      } else {
+        setLanguage('en', false);
+      }
     });
   </script>
 </body>
